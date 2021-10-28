@@ -19,6 +19,7 @@ struct g2f
 {
     float4 pos : SV_POSITION;
     float2 uv : TEXCOORD0;
+    float3 normal : TEXCOORD1;
 };
 
 sampler2D _MainTex;
@@ -50,27 +51,41 @@ v2g vert (appdata v)
     return o;
 }
 
+float3 calcWorldNormal(float3 p1, float3 p2, float3 p3) {
+    float3 vec1 = p2 - p1;
+    float3 vec2 = p3 - p2;
+    return UnityObjectToWorldNormal(normalize(cross(vec1, vec2)));
+}
+
 void addRectangle(inout TriangleStream<g2f> outStream, float3 p1, float3 p2, float3 p3, float3 p4) {
     g2f o;
+    float3 normal = calcWorldNormal(p1, p2, p3);
     o.pos = UnityObjectToClipPos(p1);
     o.uv = -float2(0, 0);
+    o.normal = normal;
     outStream.Append(o);
     o.pos = UnityObjectToClipPos(p2);
     o.uv = -float2(1, 0);
+    o.normal = normal;
     outStream.Append(o);
     o.pos = UnityObjectToClipPos(p3);
     o.uv = -float2(1, 1);
+    o.normal = normal;
     outStream.Append(o);
     outStream.RestartStrip();
 
+    normal = calcWorldNormal(p3, p4, p1);
     o.pos = UnityObjectToClipPos(p3);
     o.uv = -float2(1, 1);
+    o.normal = normal;
     outStream.Append(o);
     o.pos = UnityObjectToClipPos(p4);
     o.uv = -float2(1, 0);
+    o.normal = normal;
     outStream.Append(o);
     o.pos = UnityObjectToClipPos(p1);
     o.uv = -float2(0, 0);
+    o.normal = normal;
     outStream.Append(o);
     outStream.RestartStrip();
 }
@@ -79,9 +94,11 @@ void addRectangle(inout TriangleStream<g2f> outStream, float3 p1, float3 p2, flo
 void geom(triangle v2g IN[3], inout TriangleStream<g2f> outStream)
 {
     g2f o;
+    float3 normal = calcWorldNormal(IN[0].vertex, IN[1].vertex, IN[2].vertex);
     for (int i = 0; i < 3; i++) {
         o.pos = IN[i].pos;
         o.uv = IN[i].uv;
+        o.normal = normal;
         outStream.Append(o);
     }
     outStream.RestartStrip();
@@ -102,15 +119,19 @@ void geom(triangle v2g IN[3], inout TriangleStream<g2f> outStream)
     float3 p0 = IN[0].vertex.xyz + vec10 * _Scale;
     float3 p1 = IN[1].vertex.xyz + vec01 * _Scale;
     float3 p2 = IN[2].vertex.xyz + (vec02 + vec12) * _Scale * float3(w / max(w, h), h / max(w, h), 0);
+    normal = calcWorldNormal(p0, p1, p2);
 
     o.pos = UnityObjectToClipPos(p0 + float3(0, 0, backZ));
     o.uv = -IN[0].uv;
+    o.normal = normal;
     outStream.Append(o);
     o.pos = UnityObjectToClipPos(p1 + float3(0, 0, backZ));
     o.uv = -IN[1].uv;
+    o.normal = normal;
     outStream.Append(o);
     o.pos = UnityObjectToClipPos(p2 + float3(0, 0, backZ));
     o.uv = -IN[2].uv;
+    o.normal = normal;
     outStream.Append(o);
     outStream.RestartStrip();
 
