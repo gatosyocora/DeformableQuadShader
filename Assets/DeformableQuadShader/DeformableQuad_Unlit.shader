@@ -7,6 +7,8 @@
 		[Enum(UnityEngine.Rendering.CullMode)]
 		_Cull("Cull", Float) = 2
 
+		[Space]
+
 		[Toggle]
 		_UseFrame("Use Frame", Float) = 0
 

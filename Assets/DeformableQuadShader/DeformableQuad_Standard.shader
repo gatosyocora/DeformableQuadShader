@@ -9,6 +9,8 @@
 
 		_ShadeMinValue("ShadeMinValue", Range(0, 1.0)) = 0
 
+		[Space]
+
 		[Toggle]
 		_UseFrame("Use Frame", Float) = 0
 
