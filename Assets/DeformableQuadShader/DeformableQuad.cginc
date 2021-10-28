@@ -30,6 +30,7 @@ float _UseFrame;
 float _Scale;
 float _Thickness;
 sampler2D _FrameTex;
+float4 _FrameColor;
 
 v2g vert (appdata v)
 {

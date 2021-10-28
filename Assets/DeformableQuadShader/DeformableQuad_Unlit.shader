@@ -17,6 +17,8 @@
 		_Thickness("Thickness", Range(0, 1)) = 0.1
 
 		_FrameTex("Frame Texture", 2D) = "white" {}
+
+		_FrameColor("Frame Color", Color) = (1, 1, 1, 1)
 	}
 	SubShader
 	{
@@ -39,7 +41,7 @@
 					col = tex2D(_MainTex, i.uv);
 				}
 				else {
-					col = tex2D(_FrameTex, -i.uv);
+					col = tex2D(_FrameTex, -i.uv) * _FrameColor;
 				}
 				return col;
 			}
