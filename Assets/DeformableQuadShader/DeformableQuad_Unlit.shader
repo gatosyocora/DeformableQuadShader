@@ -8,6 +8,7 @@
 		_Cull("Cull", Float) = 2
 
 		[Space]
+		[Header(Frame)]
 
 		[Toggle]
 		_UseFrame("Use Frame", Float) = 0
