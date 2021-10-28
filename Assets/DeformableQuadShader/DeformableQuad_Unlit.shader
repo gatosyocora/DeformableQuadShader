@@ -42,13 +42,13 @@
 				v2f o;
 
 				// Get width & height of _MainTex
-				float w = _MainTex_TexelSize.x;
-				float h = _MainTex_TexelSize.y;
+				float w = _MainTex_TexelSize.z;
+				float h = _MainTex_TexelSize.w;
 
 				// h > w -> Resize horizontal
 				// w > h -> Resize Vertical
-				v.vertex.x *= h / max(w, h);
-				v.vertex.y *= w / max(w, h);
+				v.vertex.x *= w / max(w, h);
+				v.vertex.y *= h / max(w, h);
 
 				o.vertex = UnityObjectToClipPos(v.vertex);
 				o.uv = TRANSFORM_TEX(v.uv, _MainTex);
