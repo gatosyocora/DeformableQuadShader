@@ -110,6 +110,8 @@ void geom(triangle v2g IN[3], inout TriangleStream<g2f> outStream)
     float3 vec01 = normalize(IN[1].vertex.xyz - IN[0].vertex.xyz);
     float3 vec12 = normalize(IN[2].vertex.xyz - IN[1].vertex.xyz);
     float3 vec02 = normalize(IN[2].vertex.xyz - IN[0].vertex.xyz);
+    float3 vec20 = normalize(IN[0].vertex.xyz - IN[2].vertex.xyz);
+    float3 vec21 = normalize(IN[1].vertex.xyz - IN[2].vertex.xyz);
     float3 triangleNormal = normalize(cross(vec01, vec02));
 
     float w = _MainTex_TexelSize.z;
@@ -117,9 +119,9 @@ void geom(triangle v2g IN[3], inout TriangleStream<g2f> outStream)
 
     // back
     float backZ = -triangleNormal.z * 0.01; // z-fighting対策
-    float3 p0 = IN[0].vertex.xyz + vec10 * _Scale;
-    float3 p1 = IN[1].vertex.xyz + vec01 * _Scale;
-    float3 p2 = IN[2].vertex.xyz + (vec02 + vec12) * _Scale * float3(w / max(w, h), h / max(w, h), 0);
+    float3 p0 = IN[0].vertex.xyz + (vec20 + vec12) * _Scale;
+    float3 p1 = IN[1].vertex.xyz + (vec02 + vec21) * _Scale;
+    float3 p2 = IN[2].vertex.xyz + (vec02 + vec12) * _Scale;
     normal = calcWorldNormal(p0, p1, p2);
 
     o.pos = UnityObjectToClipPos(p2 + float3(0, 0, backZ));
