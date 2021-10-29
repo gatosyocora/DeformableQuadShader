@@ -122,16 +122,16 @@ void geom(triangle v2g IN[3], inout TriangleStream<g2f> outStream)
     float3 p2 = IN[2].vertex.xyz + (vec02 + vec12) * _Scale * float3(w / max(w, h), h / max(w, h), 0);
     normal = calcWorldNormal(p0, p1, p2);
 
-    o.pos = UnityObjectToClipPos(p0 + float3(0, 0, backZ));
-    o.uv = -IN[0].uv;
+    o.pos = UnityObjectToClipPos(p2 + float3(0, 0, backZ));
+    o.uv = -IN[2].uv;
     o.normal = normal;
     outStream.Append(o);
     o.pos = UnityObjectToClipPos(p1 + float3(0, 0, backZ));
     o.uv = -IN[1].uv;
     o.normal = normal;
     outStream.Append(o);
-    o.pos = UnityObjectToClipPos(p2 + float3(0, 0, backZ));
-    o.uv = -IN[2].uv;
+    o.pos = UnityObjectToClipPos(p0 + float3(0, 0, backZ));
+    o.uv = -IN[0].uv;
     o.normal = normal;
     outStream.Append(o);
     outStream.RestartStrip();
