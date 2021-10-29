@@ -66,7 +66,7 @@ void addRectangle(inout TriangleStream<g2f> outStream, float3 p1, float3 p2, flo
     o.normal = normal;
     outStream.Append(o);
     o.pos = UnityObjectToClipPos(p2);
-    o.uv = -float2(1, 0);
+    o.uv = -float2(0, 1);
     o.normal = normal;
     outStream.Append(o);
     o.pos = UnityObjectToClipPos(p3);
