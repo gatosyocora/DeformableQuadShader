@@ -13,9 +13,9 @@
 		[Toggle]
 		_UseFrame("Use Frame", Float) = 0
 
-		_Scale("Scale", Range(0, 1)) = 0.2
+		_Scale("Scale", Range(0, 0.1)) = 0.75
 
-		_Thickness("Thickness", Range(0, 1)) = 0.1
+		_Thickness("Thickness", Range(0, 0.1)) = 0.05
 
 		_FrameTex("Frame Texture", 2D) = "white" {}
 
